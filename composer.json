@@ -1,6 +1,6 @@
 {
     "name": "jimbo2150/php-comparable",
-    "description": "Compare two objects to each other with comparison operators.",
+    "description": "PHP library to allow for comparison of two objects with a comparison operator.",
     "type": "library",
     "license": "Apache",
     "autoload": {
