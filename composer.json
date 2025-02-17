@@ -2,7 +2,7 @@
     "name": "jimbo2150/php-comparable",
     "description": "PHP library to allow for comparison of two objects with a comparison operator.",
     "type": "library",
-    "license": "Apache",
+    "license": "Apache-2.0",
     "autoload": {
         "psr-4": {
             "Jimbo2150\\PhpComparable\\": "src/"
