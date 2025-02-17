@@ -9,6 +9,4 @@ use Jimbo2150\PhpComparable\Enum\Operator;
 interface Comparable
 {
 	public function compareTo(Comparable $other, Operator $operator = Operator::EQUAL): bool|int;
-
-	public function compareFrom(mixed $leftValue, Operator $operator = Operator::EQUAL): bool|int;
 }
