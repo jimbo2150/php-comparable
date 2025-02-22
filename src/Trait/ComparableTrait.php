@@ -12,17 +12,41 @@ trait ComparableTrait
 		object|array|string|int|float|bool|null $comparable,
 		Operator $operator = Operator::EQUAL,
 	): bool|int {
-		$compareValue = $comparable;
-		if (is_object($comparable)) {
+		$compareFunction = fn (
+			mixed $thisValue,
+			mixed $compareValue,
+			Operator $operator,
+		) => $operator->compare($thisValue, $compareValue);
+
+		return $this->customCompareTo($compareFunction, $comparable, $operator);
+	}
+
+	/**
+	 * Summary of customCompareTo.
+	 *
+	 * @param callable(mixed,mixed,Operator):bool|int $callback
+	 */
+	private function customCompareTo(
+		callable $callback,
+		object|array|string|int|float|bool|null $comparable,
+		Operator $operator = Operator::EQUAL,
+	): bool|int {
+		static $getOtherComparableValue = function (object $comparable): mixed {
 			$comparableReflection = new \ReflectionClass($comparable);
 			self::exceptionOnNonComparableTrait($comparableReflection);
 			/** @var ComparableTrait $comparable */
-			$compareValue = $comparableReflection->
+
+			return (new \ReflectionClass($comparable))->
 				getMethod('getComparableValue')->
 				invoke($comparable);
+		};
+		$compareValue = $comparable;
+		if (is_object($comparable)) {
+			$compareValue = $getOtherComparableValue($comparable);
+			/** @var ComparableTrait $comparable */
 		}
 
-		return $operator->compare($this->getComparableValue(), $compareValue);
+		return $callback($this->getComparableValue(), $compareValue, $operator);
 	}
 
 	abstract protected function getComparableValue(): mixed;

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Jimbo2150\PhpComparable\Tests\Mocks\Comparable\Examples;
 
 use Jimbo2150\PhpComparable\Enum\Operator;
-use Jimbo2150\PhpComparable\Interface\PublicallyComparable;
 use Jimbo2150\PhpComparable\Trait\ComparableTrait;
 
 class Score
@@ -18,11 +17,11 @@ class Score
 	{
 	}
 
-	public function compareDiff($other): bool|int
+	public function compareDiff(object $other): bool|int
 	{
-		$leftValue = $this->getComparableValue();
 		$operator = Operator::GREATER_THAN_OR_EQUAL;
-		$callback = fn (
+		$diffFunction = fn (
+			mixed $leftValue,
 			mixed $rightValue,
 			Operator $operator,
 		): bool|int => $operator->compare(
@@ -30,11 +29,11 @@ class Score
 			self::MIN_REQUIRED_SCORE
 		);
 
-		if ($other instanceof PublicallyComparable) {
-			return $callback($other->getComparableValue(), $operator);
-		}
-
-		return $other->compareFrom($callback, $operator);
+		return $this->customCompareTo(
+			$diffFunction,
+			$other,
+			$operator
+		);
 	}
 
 	public function getComparableValue(): mixed
