@@ -9,19 +9,20 @@ use Jimbo2150\PhpComparable\Enum\Operator;
 trait ComparableTrait
 {
 	public function compareTo(
-		object $comparable,
+		object|string|int|float|bool|null $comparable,
 		Operator $operator = Operator::EQUAL,
 	): bool|int {
-		$comparableReflection = new \ReflectionClass($comparable);
-		self::exceptionOnNonComparableTrait($comparableReflection);
-		/** @var ComparableTrait $comparable */
-
-		return $operator->compare(
-			$this->getComparableValue(),
-			$comparableReflection->
+		$compareValue = $comparable;
+		if (is_object($comparable)) {
+			$comparableReflection = new \ReflectionClass($comparable);
+			self::exceptionOnNonComparableTrait($comparableReflection);
+			/** @var ComparableTrait $comparable */
+			$compareValue = $comparableReflection->
 				getMethod('getComparableValue')->
-				invoke($comparable)
-		);
+				invoke($comparable);
+		}
+
+		return $operator->compare($this->getComparableValue(), $compareValue);
 	}
 
 	abstract protected function getComparableValue(): mixed;
