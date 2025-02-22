@@ -9,7 +9,7 @@ use Jimbo2150\PhpComparable\Enum\Operator;
 trait ComparableTrait
 {
 	public function compareTo(
-		object|string|int|float|bool|null $comparable,
+		object|array|string|int|float|bool|null $comparable,
 		Operator $operator = Operator::EQUAL,
 	): bool|int {
 		$compareValue = $comparable;
