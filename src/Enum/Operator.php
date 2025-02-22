@@ -39,7 +39,7 @@ enum Operator: string
 
 	private static function compare_NOT_EQUAL_DIAMOND(mixed $left, mixed $right): bool
 	{
-		return self::compare_NOT_EQUAL($left, $right);
+		return self::NOT_EQUAL->compare($left, $right);
 	}
 
 	private static function compare_NOT_IDENTICAL(mixed $left, mixed $right): bool
