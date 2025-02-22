@@ -19,6 +19,6 @@ class WheatFood
 
 	public function getComparableValue(): mixed
 	{
-		return [$this->food, $this->type];
+		return [static::class, $this->food, $this->type];
 	}
 }
