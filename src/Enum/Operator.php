@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace Jimbo2150\PhpComparable\Enum;
 
+/**
+ * This enumeration (enum) provides the various operator types PHP supports as
+ * objects used by ComparableTrait assigned objects to perform various
+ * different types of comparisons.
+ */
 enum Operator: string
 {
 	case EQUAL = '==';
@@ -17,6 +22,9 @@ enum Operator: string
 	case GREATER_THAN_OR_EQUAL = '>=';
 	case SPACESHIP = '<=>';
 
+	/**
+	 * Calls the enumeration object's specific compare function dynamically.
+	 */
 	public function compare(mixed $left, mixed $right): bool|int
 	{
 		return self::{'compare_'.$this->name}($left, $right);

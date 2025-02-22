@@ -7,12 +7,14 @@ namespace Jimbo2150\PhpComparable\Tests\Suite\Comparable;
 use Jimbo2150\PhpComparable\Enum\Operator;
 use Jimbo2150\PhpComparable\Tests\Mocks\Comparable\Comparable;
 use Jimbo2150\PhpComparable\Tests\Mocks\Comparable\NonComparable;
-use Jimbo2150\PhpComparable\Tests\Mocks\Comparable\To;
 use PHPUnit\Framework\TestCase;
 
 final class ComparableTest extends TestCase
 {
-	public function testEquality()
+	/**
+	 * Ensure comparisons using standard equality (==) return correct values.
+	 */
+	public function testEquality(): void
 	{
 		$from = new Comparable(3);
 		$to = new Comparable(432);
@@ -39,6 +41,10 @@ final class ComparableTest extends TestCase
 		);
 	}
 
+	/**
+	 * Ensure an exception is thrown when an attempt is made to compare a
+	 * non-comparable object to a comparable object.
+	 */
 	public function testNonComparable()
 	{
 		$comparable = new Comparable(3);
@@ -49,7 +55,10 @@ final class ComparableTest extends TestCase
 		$comparable->compareTo($nonComparable);
 	}
 
-	public function testIdentity()
+	/**
+	 * Ensure comparisons using strict identity (===) return correct values.
+	 */
+	public function testIdentity(): void
 	{
 		$from = new Comparable(3);
 		$to = new Comparable(432);
@@ -84,7 +93,10 @@ final class ComparableTest extends TestCase
 		);
 	}
 
-	public function testInequality()
+	/**
+	 * Ensure comparisons using inequality (!=) return correct values.
+	 */
+	public function testInequality(): void
 	{
 		$from = new Comparable(3);
 		$to = new Comparable(432);
@@ -132,7 +144,10 @@ final class ComparableTest extends TestCase
 		);
 	}
 
-	public function testLessThan()
+	/**
+	 * Ensure comparisons using less than (<) return correct values.
+	 */
+	public function testLessThan(): void
 	{
 		$from = new Comparable(3);
 		$to = new Comparable(432);
@@ -159,7 +174,10 @@ final class ComparableTest extends TestCase
 		);
 	}
 
-	public function testGreaterThan()
+	/**
+	 * Ensure comparisons using greater than (>) return correct values.
+	 */
+	public function testGreaterThan(): void
 	{
 		$from = new Comparable(3);
 		$to = new Comparable(432);
@@ -190,7 +208,10 @@ final class ComparableTest extends TestCase
 		);
 	}
 
-	public function testLessThanOrEqual()
+	/**
+	 * Ensure comparisons using less than or equal to (<=) return correct values.
+	 */
+	public function testLessThanOrEqual(): void
 	{
 		$from = new Comparable(3);
 		$to = new Comparable(432);
@@ -224,7 +245,10 @@ final class ComparableTest extends TestCase
 		);
 	}
 
-	public function testGreaterThanOrEqual()
+	/**
+	 * Ensure comparisons using greater than or equal to (>=) return correct values.
+	 */
+	public function testGreaterThanOrEqual(): void
 	{
 		$from = new Comparable(3);
 		$to = new Comparable(432);
@@ -264,7 +288,10 @@ final class ComparableTest extends TestCase
 		);
 	}
 
-	public function testSpaceship()
+	/**
+	 * Ensure comparisons using the spaceship operator (<=>) return correct values.
+	 */
+	public function testSpaceship(): void
 	{
 		$from = new Comparable(3);
 		$to = new Comparable(432);

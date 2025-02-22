@@ -10,6 +10,9 @@ use PHPUnit\Framework\TestCase;
 
 final class MixedComparableTest extends TestCase
 {
+	/**
+	 * Ensure comparisons using arrays with unequal values return correct values.
+	 */
 	public function testMixedComparable()
 	{
 		$cobbSalad = new GreenFood('cobb');
@@ -21,6 +24,9 @@ final class MixedComparableTest extends TestCase
 		);
 	}
 
+	/**
+	 * Ensure comparisons using arrays with some same values return correct values.
+	 */
 	public function testMixedComparableSimilar()
 	{
 		$cobbSalad = new GreenFood('cobb salad');
@@ -32,6 +38,9 @@ final class MixedComparableTest extends TestCase
 		);
 	}
 
+	/**
+	 * Ensure comparisons using arrays with equal values return correct values.
+	 */
 	public function testMixedComparableSame()
 	{
 		$chef_salad_1 = new GreenFood('chef salad');

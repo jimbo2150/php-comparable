@@ -9,6 +9,11 @@ use PHPUnit\Framework\TestCase;
 
 final class CustomComparableTest extends TestCase
 {
+	/**
+	 * Ensure custom comparisons return correct values. In this case,
+	 * the difference between two numbers is compared to a required minimum
+	 * value.
+	 */
 	public function testCustomDiff()
 	{
 		$score1 = new Score(2.3);

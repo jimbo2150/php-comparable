@@ -9,7 +9,11 @@ use PHPUnit\Framework\TestCase;
 
 final class OperatorTest extends TestCase
 {
-	public function testFromName()
+	/**
+	 * Ensure the Operator enumeration returns the correct values when
+	 * tryFrom() is called.
+	 */
+	public function testFromName(): void
 	{
 		$this->assertSame(
 			Operator::EQUAL,
