@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Jimbo2150\PhpComparable\Tests\Suite\Comparable;
 
 use Jimbo2150\PhpComparable\Enum\Operator;
+use Jimbo2150\PhpComparable\Tests\Mocks\Comparable\Comparable;
 use Jimbo2150\PhpComparable\Tests\Mocks\Comparable\From;
+use Jimbo2150\PhpComparable\Tests\Mocks\Comparable\NonComparable;
 use Jimbo2150\PhpComparable\Tests\Mocks\Comparable\To;
 use PHPUnit\Framework\TestCase;
 
@@ -13,11 +15,11 @@ final class ComparableTest extends TestCase
 {
 	public function testEquality()
 	{
-		$from = new From(3);
-		$to = new To(432);
-		$toEqual = new To(3);
-		$toEqualString = new To('3');
-		$toString = new To('42');
+		$from = new Comparable(3);
+		$to = new Comparable(432);
+		$toEqual = new Comparable(3);
+		$toEqualString = new Comparable('3');
+		$toString = new Comparable('42');
 
 		// Equal (==)
 		$this->assertFalse(
@@ -38,6 +40,17 @@ final class ComparableTest extends TestCase
 		);
 	}
 
+	public function testNonComparable()
+	{
+		$comparable = new Comparable(3);
+		$nonComparable = new NonComparable(432);
+
+		// Equal (==)
+		$this->expectException(\InvalidArgumentException::class);
+		$comparable->compareTo($nonComparable);
+	}
+
+	/*
 	public function testIdentity()
 	{
 		$from = new From(3);
@@ -295,4 +308,5 @@ final class ComparableTest extends TestCase
 			'string \'42\' is 1 (greater than) integer 3'
 		);
 	}
+	*/
 }

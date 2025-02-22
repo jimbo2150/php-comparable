@@ -4,13 +4,8 @@ declare(strict_types=1);
 
 namespace Jimbo2150\PhpComparable\Tests\Mocks\Comparable;
 
-use Jimbo2150\PhpComparable\Interface\PrivatelyComparable;
-use Jimbo2150\PhpComparable\Trait\PrivatelyComparableTrait;
-
-final class From implements PrivatelyComparable
+final class NonComparable
 {
-	use PrivatelyComparableTrait;
-
 	public function __construct(private mixed $value)
 	{
 	}
