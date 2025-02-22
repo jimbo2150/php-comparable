@@ -10,16 +10,14 @@ use PHPUnit\Framework\TestCase;
 
 final class MixedComparableTest extends TestCase
 {
-	public function testMixedPublicAndPrivateComparable()
+	public function testMixedComparable()
 	{
 		$cobbSalad = new GreenFood('cobb');
 		$john = new Person('John', 34);
 
-		/*
 		$this->assertFalse(
 			$cobbSalad->compareTo($john),
 			'Cobb salad must not be the same as John.'
 		);
-		*/
 	}
 }

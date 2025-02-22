@@ -6,7 +6,6 @@ namespace Jimbo2150\PhpComparable\Tests\Suite\Comparable;
 
 use Jimbo2150\PhpComparable\Enum\Operator;
 use Jimbo2150\PhpComparable\Tests\Mocks\Comparable\Comparable;
-use Jimbo2150\PhpComparable\Tests\Mocks\Comparable\From;
 use Jimbo2150\PhpComparable\Tests\Mocks\Comparable\NonComparable;
 use Jimbo2150\PhpComparable\Tests\Mocks\Comparable\To;
 use PHPUnit\Framework\TestCase;
@@ -45,17 +44,16 @@ final class ComparableTest extends TestCase
 		$comparable = new Comparable(3);
 		$nonComparable = new NonComparable(432);
 
-		// Equal (==)
+		// Exception thrown
 		$this->expectException(\InvalidArgumentException::class);
 		$comparable->compareTo($nonComparable);
 	}
 
-	/*
 	public function testIdentity()
 	{
-		$from = new From(3);
-		$to = new To(432);
-		$toString = new To('3');
+		$from = new Comparable(3);
+		$to = new Comparable(432);
+		$toString = new Comparable('3');
 
 		// Identical (===)
 		$this->assertFalse(
@@ -88,11 +86,11 @@ final class ComparableTest extends TestCase
 
 	public function testInequality()
 	{
-		$from = new From(3);
-		$to = new To(432);
-		$toEqual = new To(3);
-		$toEqualString = new To('3');
-		$toString = new To('42');
+		$from = new Comparable(3);
+		$to = new Comparable(432);
+		$toEqual = new Comparable(3);
+		$toEqualString = new Comparable('3');
+		$toString = new Comparable('42');
 
 		// Not equal (!=)
 		$this->assertTrue(
@@ -136,11 +134,11 @@ final class ComparableTest extends TestCase
 
 	public function testLessThan()
 	{
-		$from = new From(3);
-		$to = new To(432);
-		$toEqual = new To(3);
-		$toEqualString = new To('3');
-		$toString = new To('42');
+		$from = new Comparable(3);
+		$to = new Comparable(432);
+		$toEqual = new Comparable(3);
+		$toEqualString = new Comparable('3');
+		$toString = new Comparable('42');
 
 		// Less than (<)
 		$this->assertTrue(
@@ -163,11 +161,11 @@ final class ComparableTest extends TestCase
 
 	public function testGreaterThan()
 	{
-		$from = new From(3);
-		$to = new To(432);
-		$toEqual = new To(3);
-		$toEqualString = new To('3');
-		$toString = new To('42');
+		$from = new Comparable(3);
+		$to = new Comparable(432);
+		$toEqual = new Comparable(3);
+		$toEqualString = new Comparable('3');
+		$toString = new Comparable('42');
 
 		// Greater than (>)
 		$this->assertFalse(
@@ -194,11 +192,11 @@ final class ComparableTest extends TestCase
 
 	public function testLessThanOrEqual()
 	{
-		$from = new From(3);
-		$to = new To(432);
-		$toEqual = new To(3);
-		$toEqualString = new To('3');
-		$toString = new To('42');
+		$from = new Comparable(3);
+		$to = new Comparable(432);
+		$toEqual = new Comparable(3);
+		$toEqualString = new Comparable('3');
+		$toString = new Comparable('42');
 
 		// Less than or equal to (<=)
 		$this->assertTrue(
@@ -228,11 +226,11 @@ final class ComparableTest extends TestCase
 
 	public function testGreaterThanOrEqual()
 	{
-		$from = new From(3);
-		$to = new To(432);
-		$toEqual = new To(3);
-		$toEqualString = new To('3');
-		$toString = new To('42');
+		$from = new Comparable(3);
+		$to = new Comparable(432);
+		$toEqual = new Comparable(3);
+		$toEqualString = new Comparable('3');
+		$toString = new Comparable('42');
 
 		// Greater than or equal to (>=)
 		$this->assertFalse(
@@ -268,11 +266,11 @@ final class ComparableTest extends TestCase
 
 	public function testSpaceship()
 	{
-		$from = new From(3);
-		$to = new To(432);
-		$toEqual = new To(3);
-		$toEqualString = new To('3');
-		$toString = new To('42');
+		$from = new Comparable(3);
+		$to = new Comparable(432);
+		$toEqual = new Comparable(3);
+		$toEqualString = new Comparable('3');
+		$toString = new Comparable('42');
 
 		// Spaceship (<=>)
 		$this->assertSame(-1,
@@ -308,5 +306,4 @@ final class ComparableTest extends TestCase
 			'string \'42\' is 1 (greater than) integer 3'
 		);
 	}
-	*/
 }

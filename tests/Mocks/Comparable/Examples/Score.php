@@ -6,9 +6,12 @@ namespace Jimbo2150\PhpComparable\Tests\Mocks\Comparable\Examples;
 
 use Jimbo2150\PhpComparable\Enum\Operator;
 use Jimbo2150\PhpComparable\Interface\PublicallyComparable;
+use Jimbo2150\PhpComparable\Trait\ComparableTrait;
 
 class Score
 {
+	use ComparableTrait;
+
 	public const MIN_REQUIRED_SCORE = 1;
 
 	public function __construct(private float $score)
