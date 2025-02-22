@@ -26,16 +26,19 @@ trait ComparableTrait
 
 	abstract protected function getComparableValue(): mixed;
 
-	final public static function hasComparableTrait(\ReflectionClass $comparableReflection): bool
+	final public static function hasComparableTrait(object $object): bool
 	{
-		return isset($comparableReflection->getTraits()[ComparableTrait::class]);
+		$reflectionClass = $object instanceof \ReflectionClass ?
+			$object :
+			(new \ReflectionClass($object));
+
+		return isset($reflectionClass->getTraits()[ComparableTrait::class]);
 	}
 
-	final public static function exceptionOnNonComparableTrait(
-		\ReflectionClass $comparableReflection,
-	): void {
-		if (!self::hasComparableTrait($comparableReflection)) {
-			$message = 'Argument $comparable must have trait '.self::class;
+	final public static function exceptionOnNonComparableTrait(object $object): void
+	{
+		if (!self::hasComparableTrait($object)) {
+			$message = 'Argument $object must have trait '.self::class;
 			throw new \InvalidArgumentException($message);
 		}
 	}
