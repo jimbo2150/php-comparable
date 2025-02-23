@@ -2,7 +2,7 @@
 ![License](https://img.shields.io/github/license/jimbo2150/php-comparable)
 ![PHP Required Version](https://img.shields.io/packagist/dependency-v/jimbo2150/php-comparable/php)
 
-# PHP Comparable Interface & Convenience Trait
+# PHP Comparable Objects Trait & Custom Comparison Convenience Method
 
 A PHP library to allow for comparison of two objects with a comparison operator.
 
