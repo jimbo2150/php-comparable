@@ -92,6 +92,13 @@ trait ComparableTrait
 		$reflectionClass = $object instanceof \ReflectionClass ?
 			$object :
 			(new \ReflectionClass($object));
+		$traits = $reflectionClass->getTraits();
+
+		while ($ancestor = $reflectionClass->getParentClass()) {
+			$traits = array_merge($traits, $ancestor->getTraits());
+		}
+
+		$traits = array_unique($traits);
 
 		return isset($reflectionClass->getTraits()[ComparableTrait::class]);
 	}
