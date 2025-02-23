@@ -18,15 +18,15 @@ $ composer require jimbo2150/php-comparable
 
 ## Usage (private value with convenience trait)
 
-The privately comparable interface requires a protected method, `getComparableValue()`, which does not publically expose the value to be compared:
+The comparable trait (`ComparableTrait`) requires a protected method, `getComparableValue()`, which does not publically expose the value to be compared. The convenience methods then use reflection to access the other object's value:
 
 ```php
-use Jimbo2150\PhpComparable\Interface\PrivatelyComparable;
-use Jimbo2150\PhpComparable\Trait\PrivatelyComparableTrait;
-use Jimbo2150\PhpComparable\Enum\Operator;
+use Jimbo2150\PhpComparable\Trait\ComparableTrait;
 
-class Person implements PrivatelyComparable {
-	use PrivatelyComparableTrait;
+// This class will compare the Person object's $age property.
+class Person
+{
+	use ComparableTrait;
 
 	public function __construct(private string $name, private int $age)
 	{
@@ -37,7 +37,6 @@ class Person implements PrivatelyComparable {
 	{
 		return $this->age;
 	}
-
 }
 
 $john = new Person('John', 29);
@@ -47,70 +46,16 @@ $john->compareTo($karen); // False, compares by equals (==) by default
 $karen->compareTo($john, Operator::from('<')); // True, comparing with less than
 ```
 
-## Usage (publicly-visible value with convenience trait)
-
-The publically comparable interface requires a public method `getComparableValue()` which exposes the value to be compared:
-
-```php
-use Jimbo2150\PhpComparable\Interface\PublicallyComparable;
-use Jimbo2150\PhpComparable\Trait\PublicallyComparableTrait;
-
-class GreenFood implements PublicallyComparable {
-	use PublicallyComparableTrait;
-
-	/** The value to compare */
-	private string $food = 'salad';
-
-	public function __construct(private string $type)
-	{
-
-	}
-
-	public function getComparableValue(): mixed
-	{
-		return [$this->food, $this->type];
-	}
-
-}
-
-class WheatFood implements PublicallyComparable {
-	use PublicallyComparableTrait;
-
-	/** The value to compare */
-	private $food = 'pasta';
-
-	public function __construct(private string $type)
-	{
-
-	}
-
-	public function getComparableValue(): mixed
-	{
-		return [$this->food, $this->type];
-	}
-
-}
-
-$cobbSalad = new GreenFood('cobb');
-$chefSalad = new GreenFood('chef');
-$pasta = new WheatFood('spaghetti');
-$pasta2 = new WheatFood('spaghetti');
-
-$cobbSalad->compareTo($chefSalad); // false
-$pasta->compareTo($pasta2); // true
-```
-
 ## Usage (private value with custom comparison)
 
-You can also implement your own custom compare function by implementing both `compareTo()` and `compareFrom()` methods:
+You can also implement your own custom compare method by creating your own comparison method that utilizes the `customCompareTo(callable $callback, ComparableTrait $compareTo, Operator $operator)` convenience method and provide a callback (callable or Closure) that, when called, is passed the current object's comparison value, the comparison value of the object your are comparing to, and the operator as parameter values:
 
 ```php
-use Jimbo2150\PhpComparable\Interface\PrivatelyComparable;
-use Jimbo2150\PhpComparable\Trait\PrivatelyComparableTrait;
+use Jimbo2150\PhpComparable\Trait\ComparableTrait;
 
-class Score implements PrivatelyComparable
+class Score
 {
-	use PrivatelyComparableTrait;
+	use ComparableTrait;
 
 	public const MIN_REQUIRED_SCORE = 1;
 
@@ -118,23 +63,23 @@ class Score implements PrivatelyComparable
 	{
 	}
 
-	public function compareDiff(PrivatelyComparable|PublicallyComparable $other): bool|int
+	public function compareDiff(object $other): bool|int
 	{
-		$leftValue = $this->getComparableValue();
 		$operator = Operator::GREATER_THAN_OR_EQUAL;
-		$callback = fn (
+		$diffFunction = fn (
+			mixed $leftValue,
 			mixed $rightValue,
 			Operator $operator,
-		) => $operator->compare(
+		): bool|int => $operator->compare(
 			$leftValue - $rightValue,
 			self::MIN_REQUIRED_SCORE
 		);
 
-		if ($other instanceof PublicallyComparable) {
-			return $callback($other->getComparableValue(), $operator);
-		}
-
-		return $other->compareFrom($callback, $operator);
+		return $this->customCompareTo(
+			$diffFunction,
+			$other,
+			$operator
+		);
 	}
 
 	public function getComparableValue(): mixed
