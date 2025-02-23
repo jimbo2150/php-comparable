@@ -92,15 +92,41 @@ trait ComparableTrait
 		$reflectionClass = $object instanceof \ReflectionClass ?
 			$object :
 			(new \ReflectionClass($object));
-		$traits = $reflectionClass->getTraits();
 
-		while ($ancestor = $reflectionClass->getParentClass()) {
-			$traits = array_merge($traits, $ancestor->getTraits());
+		/**
+		 * @return array<int,\ReflectionClass>
+		 */
+		$getAncestryAndSelf = function (\ReflectionClass $reflection): array {
+			$ancestorAndSelf = [$reflection];
+			while ($ancestor = $reflection->getParentClass()) {
+				$ancestorAndSelf[$ancestor];
+			}
+
+			return $ancestorAndSelf;
+		};
+
+		/**
+		 * @return array<string,array<int,string>>
+		 */
+		$getTraitsRecursive = function (
+			\ReflectionClass $reflection,
+		) use (&$getTraitsRecursive): array {
+			$traits = $reflection->getTraits();
+			if ($parent = $reflection->getParentClass()) {
+				$traits = array_merge($traits, $getTraitsRecursive($parent));
+			}
+
+			return $traits;
+		};
+
+		$ancestorsAndSelf = $getAncestryAndSelf($object);
+		$traits = [];
+
+		foreach ($ancestorsAndSelf as $reflection) {
+			$traits = array_merge($traits, $getTraitsRecursive($reflection));
 		}
 
-		$traits = array_unique($traits);
-
-		return isset($reflectionClass->getTraits()[ComparableTrait::class]);
+		return isset($traits[ComparableTrait::class]);
 	}
 
 	/**
