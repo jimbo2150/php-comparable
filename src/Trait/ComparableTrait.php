@@ -119,7 +119,7 @@ trait ComparableTrait
 			return $traits;
 		};
 
-		$ancestorsAndSelf = $getAncestryAndSelf($object);
+		$ancestorsAndSelf = $getAncestryAndSelf($reflectionClass);
 		$traits = [];
 
 		foreach ($ancestorsAndSelf as $reflection) {
