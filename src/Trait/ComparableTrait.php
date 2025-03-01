@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Jimbo2150\PhpComparable\Trait;
 
 use Jimbo2150\PhpComparable\Enum\Operator;
+use Jimbo2150\PhpUtilities\Traits;
 
 /**
  * Trait to provide comparison methods to objects it is a trait of.
@@ -59,8 +60,7 @@ trait ComparableTrait
 		Operator $operator = Operator::EQUAL,
 	): bool|int {
 		static $getOtherComparableValue = function (object $comparable): mixed {
-			$comparableReflection = new \ReflectionClass($comparable);
-			self::exceptionOnNonComparableTrait($comparableReflection);
+			self::exceptionOnNonComparableTrait($comparable);
 			/** @var ComparableTrait $comparable */
 
 			return (new \ReflectionClass($comparable))->
@@ -89,44 +89,7 @@ trait ComparableTrait
 	 */
 	final public static function hasComparableTrait(object $object): bool
 	{
-		$reflectionClass = $object instanceof \ReflectionClass ?
-			$object :
-			(new \ReflectionClass($object));
-
-		/**
-		 * @return array<int,\ReflectionClass>
-		 */
-		$getAncestryAndSelf = function (\ReflectionClass $reflection): array {
-			$ancestorAndSelf = [$reflection];
-			while ($ancestor = $reflection->getParentClass()) {
-				$ancestorAndSelf[$ancestor];
-			}
-
-			return $ancestorAndSelf;
-		};
-
-		/**
-		 * @return array<string,array<int,string>>
-		 */
-		$getTraitsRecursive = function (
-			\ReflectionClass $reflection,
-		) use (&$getTraitsRecursive): array {
-			$traits = $reflection->getTraits();
-			if ($parent = $reflection->getParentClass()) {
-				$traits = array_merge($traits, $getTraitsRecursive($parent));
-			}
-
-			return $traits;
-		};
-
-		$ancestorsAndSelf = $getAncestryAndSelf($reflectionClass);
-		$traits = [];
-
-		foreach ($ancestorsAndSelf as $reflection) {
-			$traits = array_merge($traits, $getTraitsRecursive($reflection));
-		}
-
-		return isset($traits[ComparableTrait::class]);
+		return Traits::instanceOf($object, ComparableTrait::class);
 	}
 
 	/**

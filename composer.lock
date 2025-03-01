@@ -4,8 +4,53 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4e6555c666169c989d61f5076be9e4d6",
-    "packages": [],
+    "content-hash": "10da8563e3f73ee043dd212198e3b512",
+    "packages": [
+        {
+            "name": "jimbo2150/php-utilities",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jimbo2150/php-utilities.git",
+                "reference": "093d17fa08b0a8d561705c554d3b004d4df7da0a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jimbo2150/php-utilities/zipball/093d17fa08b0a8d561705c554d3b004d4df7da0a",
+                "reference": "093d17fa08b0a8d561705c554d3b004d4df7da0a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.70",
+                "phpunit/phpunit": "^10.0|^11.0|^12.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Jimbo2150\\PhpUtilities\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Jim Robinson",
+                    "email": "jimbo2150@gmail.com"
+                }
+            ],
+            "description": "Various utilities for PHP projects or libraries.",
+            "support": {
+                "issues": "https://github.com/jimbo2150/php-utilities/issues",
+                "source": "https://github.com/jimbo2150/php-utilities/tree/v1.0.0"
+            },
+            "time": "2025-03-01T00:54:53+00:00"
+        }
+    ],
     "packages-dev": [
         {
             "name": "clue/ndjson-react",
